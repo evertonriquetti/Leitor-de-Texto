@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+body {
+    font-family: 'Ubuntu', sans-serif;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#voices, #text {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+#speakBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#eraseBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #f54932;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#speakBtn:hover {
+    background-color: #0056b3;
+}
+
+#eraseBtn:hover {
+    background-color: #f52f15;
+}

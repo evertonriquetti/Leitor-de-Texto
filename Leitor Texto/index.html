@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Leitor de Texto</title>
+</head>
+<body>
+<h1>Leitor de Texto</h1>
+<select id="voices"></select>
+<textarea id="text" rows="5" cols="50" >Digite o texto que deseja ouvir aqui.</textarea>
+<button id="speakBtn">Ouvir</button>
+<br><br>
+<button id="eraseBtn" onclick="eraseText()">Limpar</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var voicesSelect = document.getElementById('voices');
+    var speakBtn = document.getElementById('speakBtn');
+    var textInput = document.getElementById('text');
+
+    // Função para listar as vozes disponíveis
+    function populateVoiceList() {
+        var voices = window.speechSynthesis.getVoices();
+        voicesSelect.innerHTML = '';
+        voices.forEach(function(voice, i) {
+            var option = document.createElement('option');
+            option.textContent = voice.name + ' (' + voice.lang + ')';
+            option.setAttribute('data-lang', voice.lang);
+            option.setAttribute('data-name', voice.name);
+            voicesSelect.appendChild(option);
+        });
+    }
+
+    // Popula a lista de vozes ao carregar a página
+    populateVoiceList();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+    }
+
+    // Função para falar o texto
+    function speakText() {
+        var selectedOption = voicesSelect.selectedOptions[0].getAttribute('data-name');
+        var voices = window.speechSynthesis.getVoices();
+        var utterance = new SpeechSynthesisUtterance(textInput.value);
+        voices.forEach(function(voice) {
+            if (voice.name === selectedOption) {
+                utterance.voice = voice;
+            }
+        });
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function eraseText() {
+        document.getElementById("text").value = "";
+    }
+
+    // Evento de clique no botão para falar
+    speakBtn.addEventListener('click', function() {
+        speakText();
+    });
+
+    // Evento de clique no botão para apagar
+    eraseBtn.addEventListener('click', function() {
+        eraseText();
+    });
+});
+</script>
+</body>
+</html>
